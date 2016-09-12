@@ -1,0 +1,88 @@
+<div class="container">
+
+	<!-- Static navbar -->
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">Cofe Project</a>
+				</div>
+				<div id="navbar" class="navbar-collapse collapse">
+					<ul class="nav navbar-nav">
+						<li class="active"><a ui-sref="home">Home</a></li>
+						<li><a ui-sref="sms">Tes SMS</a></li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+					</ul>
+				</div><!--/.nav-collapse -->
+			</div><!--/.container-fluid -->
+		</nav>
+
+	<!-- Main component for a primary marketing message or call to action -->
+	<!-- <div class="jumbotron">
+		<h1>Navbar example</h1>
+		<p>This example is a quick exercise to illustrate how the default, static navbar and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
+		<p>
+			
+		</p>
+	</div> -->
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+		Visualisasi Kelembapan			
+		</div>
+		<div class="panel-body">
+			Pilih Sektor, kemudian tekan tombol refresh
+			<div class="row">
+				<form class="form-horizontal">
+					<fieldset>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Find Sector to show:</label>
+							<div class="col-sm-6">
+								<ui-select ng-model="sector.selectedValue" theme="bootstrap">
+								<ui-select-match placeholder="Select or search a person in the list...">{{$select.selected.name}}
+							</ui-select-match>
+							<ui-select-choices repeat="item in sectors | filter: $select.search">
+								<div ng-bind-html="item.name | highlight: $select.search"></div>
+								<small ng-bind-html="item.region | highlight: $select.search"></small>
+									</ui-select-choices>
+								</ui-select>
+							</div>
+							<div class="col-sm-3">
+								<a class="btn btn-primary" ng-click="refresh();"><span class="glyphicon glyphicon-refresh"></span> Refresh</a>
+							</div>
+						</div>
+					</fieldset>
+					<!-- <fieldset>
+						<ui-select ng-model="selected.value">
+						    <ui-select-match>
+						        <span ng-bind="$select.selected.name"></span>
+						    </ui-select-match>
+						    <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
+						        <span ng-bind="item.name"></span>
+						    </ui-select-choices>
+						</ui-select>
+					</fieldset> -->
+				</form>
+			</div>
+			<!-- <div ng-if="retrieved"> -->
+				<canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-series="series" chart-options="options" chart-dataset-override="datasetOverride" chart-click="onClick"> </canvas>
+			<!-- </div> -->
+		</div>
+	</div>
+
+	<!-- <div class="panel panel-default">
+		<div class="panel-heading">
+			
+		</div>
+		<div class="panel-body">
+			Send SMS here
+		</div>
+	</div> -->
+
+</div> <!-- /container -->
