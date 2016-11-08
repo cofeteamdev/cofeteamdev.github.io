@@ -11,6 +11,10 @@ App.config(['$stateProvider','$urlRouterProvider','TwilioProvider',function($sta
 		url:'/sms',
 		templateUrl:'partials/sms.html',
 		controller:'smsController'
+	}).state('dashboard',{
+		url:'/dashboard/:id',
+		templateUrl:'partials/dashboard.html',
+		controller:'dashboardController'
 	});
 	TwilioProvider.setCredentials({
 		accountSid: 'AC17482244a4335daaade3632bdfd28a52',
@@ -69,81 +73,6 @@ App.filter('propsFilter', function() {
   return out;
 };
 });
-
-App.controller('homeController', ['$scope','DB','moment', function($scope,DB,moment){
-	$scope.data_kelembapan = [];
-	$scope.data_labels = [];
-
-	$scope.labels = $scope.data_labels;//["January", "February", "March", "April", "May", "June", "July"];
-	$scope.series = ['Kelembapan'];
-	$scope.data = $scope.data_kelembapan;
-	
-	
-	$scope.onClick = function (points, evt) {
-		console.log(points, evt);
-	};
-	$scope.datasetOverride = [{ yAxisID: 'y-axis-1' }];
-	$scope.options = {
-		scales: {
-			yAxes: [
-				{
-					id: 'y-axis-1',
-					type: 'linear',
-					display: true,
-					position: 'left'
-				}
-			]
-		}
-	};
-
-	// Untuk parsing dari server agar sesuai..
-	function parseData(datas){
-		console.log(datas);
-		$scope.data_kelembapan = [];
-		$scope.data_labels = [];
-		for (var i = datas.length-1; i >= 0 ; i--) {
-			$scope.data_kelembapan.push(datas[i].kelembapan);
-			
-			var label = moment.unix(datas[i].timestamp).utcOffset("+07:00").format('HH:mm');
-			$scope.data_labels.push(label);
-		};
-		$scope.labels = $scope.data_labels;
-		$scope.data = [$scope.data_kelembapan];
-	}
-
-	$scope.selectedIdDevice = 1;
-	$scope.retrieved = false;
-	$scope.refresh = function(){
-		$scope.retrieved = false;
-		$scope.selectedIdDevice = $scope.sector.selectedValue.id;
-		DB.getData($scope.selectedIdDevice,function(response){
-			$scope.response = response;
-			parseData(response);
-			$scope.retrieved = true;
-		});
-	}
-
-	//  BUAT CONTOH DROP DOWN
-	$scope.sectors = [
-		{ id:'1', name: 'Sector 1',region: 'Lembang'},
-		{ id:'2', name: 'Sector 2',region: 'Lembang'},
-		{ id:'3', name: 'Sector 3',region: 'Garut'},
-		{ id:'4', name: 'Sector 4',region: 'Panyileukan'},
-	  ];
-
-	  $scope.sector = {};
-	  $scope.sector.selectedValue = $scope.sectors[0];
-	
-	$scope.itemArray = [
-		{id: 1, name: 'first'},
-		{id: 2, name: 'second'},
-		{id: 3, name: 'third'},
-		{id: 4, name: 'fourth'},
-		{id: 5, name: 'fifth'},
-	];
-
-	$scope.selected = { value: $scope.itemArray[0] };
-}]);
 
 App.controller('smsController', ['$scope','Twilio', function($scope,Twilio){
 	$scope.submit = function () {
